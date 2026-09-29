@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "[2026Q3] Example Paper Review",
+    "date": "2026년 Q3",
+    "footer": "Papers You Should Read  ·  DSBA Lab",
+    "source": "Example et al., “An Example Paper”, Venue 2026"
+  },
+  "slides": [
+    {
+      "layout": "Title",
+      "title": "An Example Paper: Rewarding Belief Shift in LLM Reasoning",
+      "citation": "Example et al., “An Example Paper”, Venue 2026, arXiv:0000.00000",
+      "presenter": ["서울대학교 산업공학과", "DSBA 연구실", "발표자"],
+      "notes": "안녕하세요. 이번 Papers You Should Read에서 소개할 논문은 ... 입니다."
+    },
+    {
+      "layout": "Contents",
+      "toc": {"items": ["Background", "Method", "Experiments", "Discussion", "Conclusion"], "current": 0},
+      "notes": "발표는 다섯 부분으로 진행합니다. 먼저 이 연구가 풀려는 문제부터 보겠습니다."
+    },
+    {
+      "layout": "H_Statement", "section": "Background", "title": "Key Question",
+      "statement": "정답 여부만으로 추론 과정을 평가할 수 있을까?",
+      "support": "답이 맞아도 과정이 틀린 경우가 많다는 관찰에서 출발",
+      "notes": "이 논문이 던지는 질문은 하나입니다. 정답을 맞혔는지만 보고 추론을 평가해도 되는가입니다."
+    },
+    {
+      "layout": "E_TwoColumn", "section": "Background", "title": "기존 보상 방식의 두 갈래",
+      "header_left": "Outcome reward", "body_left": ["최종 정답만 채점", "> 싸고 확장이 쉬움", "과정 정보가 없음", "> 운으로 맞힌 답도 같은 보상"],
+      "header_right": "Process reward", "body_right": ["스텝마다 채점", "> 신호가 촘촘함", "라벨 비용이 큼", "> 사람 주석 또는 별도 모델 필요"],
+      "notes": "보상을 주는 방법은 크게 두 가지입니다. 왼쪽은 결과만, 오른쪽은 과정을 봅니다."
+    },
+    {
+      "layout": "Contents",
+      "toc": {"items": ["Background", "Method", "Experiments", "Discussion", "Conclusion"], "current": 1},
+      "notes": "이제 제안 방법을 보겠습니다."
+    },
+    {
+      "layout": "F_Diagram_Band", "section": "Method", "title": "확신의 변화를 스텝 보상으로 사용",
+      "shapes": [
+        {"type": "flow", "frame": "zone", "box": [0.02, 0.1, 0.96, 0.32], "items": ["Query", "Policy", "Verifier", "Step reward"], "key": [2]},
+        {"type": "math", "frame": "zone", "box": [0.25, 0.55, 0.5, 0.38], "tex": "r_t = b_t - b_{t-1},\\quad b_t = P_{\\phi}(y^{*} \\mid x, s_{\\leq t})", "size": 36}
+      ],
+      "band": ["verifier가 정답에 부여하는 확률 b_t의 **변화량**을 보상으로 사용함", "> 추가 라벨 없이 스텝 단위 신호를 얻음"],
+      "notes": "구조는 단순합니다. 정책이 한 스텝을 생성할 때마다 verifier가 정답 확률을 다시 계산합니다. 그 확률이 얼마나 올랐는지가 그 스텝의 보상입니다."
+    },
+    {
+      "layout": "Contents",
+      "toc": {"items": ["Background", "Method", "Experiments", "Discussion", "Conclusion"], "current": 2}
+    },
+    {
+      "layout": "D_TopBand_Wide", "section": "Experiments", "title": "세 벤치마크 모두에서 가장 높은 정확도",
+      "band": ["평균 **+5.6%p**, 어려운 문제일수록 차이가 큼", "> 같은 데이터·같은 계산량 조건"],
+      "shapes": [
+        {"type": "table", "box": [1.0, 4.7, 18.0, 0], "row_h": 0.72, "size": 22, "ours_rows": [3],
+         "col_widths": [5.0, 4.33, 4.33, 4.34],
+         "rows": [["Method", "GSM8K", "MATH", "Avg."], ["Outcome RL", "61.2", "32.4", "46.8"],
+                  ["Process RL", "63.5", "34.0", "48.8"], ["Ours", "69.8", "38.9", "54.4"]]}
+      ],
+      "notes": "메인 결과입니다. 세 방법을 같은 조건에서 비교했고, 제안 방법이 평균 약 5.6%p 높습니다."
+    },
+    {
+      "layout": "A_FigureFull_Band", "section": "Experiments", "title": "학습 후반에도 개선이 이어짐",
+      "figure": {"path": "figs/example_wide.png", "highlights": [{"box": [0.62, 0.12, 0.33, 0.55]}]},
+      "band": ["300 step 이후 baseline은 정체, 제안 방법은 계속 상승함", "> 스텝 보상이 탐색 신호를 유지하는 것으로 해석"],
+      "notes": "학습 곡선을 보면 차이가 더 분명합니다. 빨간 틀 구간에서 baseline은 멈추지만 제안 방법은 계속 오릅니다."
+    },
+    {
+      "layout": "E_TwoColumn", "section": "Discussion", "title": "의의와 한계",
+      "header_left": "의의", "body_left": ["라벨 없이 과정 보상", "> 기존 verifier 재사용"],
+      "header_right": "한계", "body_right": ["verifier 품질에 의존", "> verifier가 틀리면 보상도 틀림"],
+      "notes": "정리하면 장점은 라벨 없이 과정 보상을 얻는다는 점이고, 한계는 verifier에 의존한다는 점입니다."
+    },
+    {
+      "layout": "Closing", "title": "감사합니다", "subtitle": "Papers You Should Read  ·  2026 Q3"
+    }
+  ]
+}

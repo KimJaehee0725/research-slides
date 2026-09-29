@@ -1,0 +1,5 @@
+python-pptx>=1.0
+pymupdf>=1.24
+pillow
+matplotlib
+lxml
