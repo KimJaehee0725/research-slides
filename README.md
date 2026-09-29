@@ -13,7 +13,7 @@ DSBA 연구실의 논문 리뷰(Papers You Should Read)와 연구 발표 자료�
 Claude Code:
 
 ```bash
-git clone https://github.com/<github-id>/research-slides ~/.claude/skills/research-slides
+git clone https://github.com/KimJaehee0725/research-slides ~/.claude/skills/research-slides
 pip install -r ~/.claude/skills/research-slides/requirements.txt
 ```
 

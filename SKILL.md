@@ -7,7 +7,7 @@ description: DSBA 연구실 템플릿(Pantone 팔레트, NanumSquare)으로 논�
 
 논문 한 편(또는 여러 편)을 연구실 발표 자료로 만드는 스킬입니다. 슬라이드를 도형 단위로 손으로 배치하지 않습니다. 레이아웃을 고르고 **이름 있는 placeholder 역할**을 JSON spec으로 채운 뒤 `scripts/build_deck.py`로 생성합니다. 색과 도형 스타일은 스크립트가 정하므로 덱 전체가 같은 규칙을 따릅니다.
 
-경로는 모두 이 스킬 폴더(`SKILL.md`가 있는 곳) 기준입니다.
+경로는 모두 이 스킬 폴더(`SKILL.md`가 있는 곳) 기준입니다. 원본 repo: https://github.com/KimJaehee0725/research-slides
 
 ## 준비
 

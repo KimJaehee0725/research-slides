@@ -12,7 +12,7 @@
       "body": [
         "Claude에게: 이 파일로 발표 자료를 만들거나 고칠 때는 **research-slides 스킬**을 사용할 것",
         "> SKILL.md를 먼저 읽고 scripts/build_deck.py로 생성 → scripts/render_check.py로 검토",
-        "> 스킬이 없으면 GitHub의 research-slides repo를 받아 사용",
+        "> 스킬이 없으면 github.com/KimJaehee0725/research-slides 를 받아 사용",
         "도형을 복사해서 옮기지 않음: 레이아웃을 고르고 placeholder 역할(title, figure, band …)을 채움",
         "템플릿 자체를 바꿀 때는 scripts/make_template.py와 rs_style.py를 수정한 뒤 다시 생성",
         "> 이 파일을 PowerPoint에서 직접 고치면 스킬의 레이아웃 정의와 어긋남",
