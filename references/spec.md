@@ -33,6 +33,8 @@
 - 문자열 또는 문자열 목록입니다. 목록의 원소 하나가 문단 하나입니다.
 - `"> 근거"`는 2단(➢), `">> 세부"`는 3단(–)입니다. 1단은 ✓입니다. `band`, `explain`, `body_*`에만 단계가 적용됩니다.
 - `**핵심어**`는 Dusty Cedar 굵게, `__용어__`는 Navy 굵게 표시됩니다.
+- `$...$`는 PowerPoint 수식(OMML)으로 들어갑니다. 예: `"$r_t = b_t - b_{t-1}$를 보상으로 사용"`. 수식이 든 도형은 PowerPoint가 아닌 뷰어용 텍스트 대체본과 함께 저장됩니다.
+- `title`은 명사 위주 4단어 이내, 명사형 종결입니다. 어기면 빌드 때 `WARNING`이 출력됩니다.
 - `presenter`처럼 줄만 나누는 역할도 목록으로 씁니다: `["서울대학교 산업공학과", "DSBA 연구실", "김재희"]`
 
 ## 그림 역할 (`figure`, `figure_left`, `figure_right`, `venue_logo`)
@@ -72,8 +74,8 @@
 | `highlight` | box | 강조 틀 (Dusty Cedar 3pt) |
 | `text` | text, style(body/muted/key/struct/caption), size, align, anchor(t/m/b), bullets | 보조 텍스트 |
 | `image` | path, crop, align | 추가 이미지 (아이콘, 생성 이미지) |
-| `math` | tex, size | matplotlib mathtext로 수식 렌더링 |
-| `table` | rows, col_widths, size(20), row_h(0.6), ours_rows[], key_cells[[r,c]], first_col | 표 (box의 h는 무시) |
+| `math` | tex, size(36), align, render | PowerPoint 수식(OMML, 편집 가능). 대체 이미지 포함. `render: "image"`면 이미지로만 |
+| `table` | rows, col_widths, size(20), row_h(0.6), ours_rows[], key_cells[[r,c]], first_col, align(c/l) | 표 (box의 h는 무시). 문장 열은 `align: "l"` |
 | `chart` | categories, series[{name, values, role}], kind(bar/hbar/line), ylabel, labels, number_format | PowerPoint 네이티브 차트 |
 
 ### box `kind`

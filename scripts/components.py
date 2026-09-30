@@ -92,12 +92,28 @@ def _no_shadow(shape):
 # Inline markup:  **key**  -> Dusty Cedar bold   (핵심어)
 #                 __term__ -> Navy Peony bold     (구조 용어)
 # --------------------------------------------------------------------------
-TOKEN = re.compile(r"(\*\*.+?\*\*|__.+?__)")
+#                 $x_t$    -> native PowerPoint equation (inline)
+TOKEN = re.compile(r"(\*\*.+?\*\*|__.+?__|\$[^$]+\$)")
+
+
+def _add_inline_math(paragraph, tex, size=None):
+    import rs_math
+    m = rs_math.omath_element(tex, display=False, size_pt=size)
+    m.set("data-tex", tex)  # used for the plain-text fallback, removed on wrap
+    p = paragraph._p
+    end = p.find(qn("a:endParaRPr"))
+    if end is not None:
+        end.addprevious(m)
+    else:
+        p.append(m)
 
 
 def add_runs(paragraph, s, size=None, color=None, bold=None):
     for part in TOKEN.split(s):
         if not part:
+            continue
+        if part.startswith("$") and part.endswith("$") and len(part) > 2:
+            _add_inline_math(paragraph, part[1:-1], size)
             continue
         r = paragraph.add_run()
         if part.startswith("**") and part.endswith("**"):
@@ -272,7 +288,8 @@ def chevrons(slide, x, y, w, h, items, key=(), size=22):
 
 
 def table(slide, x, y, w, rows, col_widths=None, size=20, row_h=0.6,
-          ours_rows=(), key_cells=(), first_col=True):
+          ours_rows=(), key_cells=(), first_col=True, align="c"):
+    """align: alignment of non-first columns ('c' for numbers, 'l' for sentences)."""
     nr, nc = len(rows), len(rows[0])
     gf = slide.shapes.add_table(nr, nc, Inches(x), Inches(y), Inches(w), Inches(row_h * nr))
     tbl = gf.table
@@ -306,7 +323,7 @@ def table(slide, x, y, w, rows, col_widths=None, size=20, row_h=0.6,
             else:
                 cell.fill.background()
             fill_text(cell.text_frame, str(rows[i][j]), size=size, color=color, bold=bold,
-                      levels=False, align="l" if j == 0 else "c")
+                      levels=False, align="l" if j == 0 else align)
             tcPr = cell._tc.get_or_add_tcPr()
             lnB = etree.Element(qn("a:lnB"), w="12700")
             tcPr.insert(0, lnB)  # borders must precede the cell fill in tcPr
@@ -392,6 +409,12 @@ def image_fit(slide, path, x, y, w, h, crop=None, align="c"):
     if crop:
         pic.crop_left, pic.crop_top, pic.crop_right, pic.crop_bottom = l, t, r, b
     return pic, (dx, dy, dw, dh)
+
+
+def equation(slide, x, y, w, h, tex, size=36, align="c"):
+    """Native PowerPoint equation (editable in PowerPoint), image fallback elsewhere."""
+    import rs_math
+    return rs_math.equation_shape(slide, x, y, w, h, tex, size=size, align=align)
 
 
 def math_image(tex, size=32, color="#262626", dpi=300):

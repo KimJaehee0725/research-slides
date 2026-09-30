@@ -86,10 +86,10 @@
       "layout": "Guide", "hidden": true,
       "title": "글쓰기와 내레이션",
       "body": [
-        "한 장에 핵심 메시지 하나. 제목만 읽어도 주제가 보이게 작성",
-        "밴드 1단은 주장, 2단은 근거·수치. 32pt 기준 한 줄 40자, 3~4줄",
+        "제목은 명사 위주 4단어 이내, 명사형으로 끝맺음 (예: RLHF vs SFT, 실험 결과, Training Dynamics)",
+        "한 장에 핵심 메시지 하나: 주장은 제목이 아니라 밴드 1단에, 근거·수치는 2단에 (32pt 기준 한 줄 40자, 3~4줄)",
         "> 종결은 명사형 (~함 / ~임 / ~확인)",
-        "그림은 논문 캡쳐를 그대로 쓰고, 중요한 영역만 강조 틀로 표시",
+        "그림은 논문 캡쳐를 그대로 쓰고, 중요한 영역만 강조 틀로 표시", "수식은 PowerPoint 수식으로: 본문 안은 $...$, 단독 수식은 math 컴포넌트 (LaTeX 입력)",
         "출처는 하단 바 오른쪽 source 칸에 (Author et al., Venue Year)",
         "내레이션 대본은 발표자 노트에 작성: 슬라이드당 30~60초, 합니다체 구어",
         "> 슬라이드 문장을 그대로 읽지 않고, 왜 중요한지와 다음 슬라이드로의 연결을 말함"
@@ -121,27 +121,27 @@
     },
     {
       "layout": "A_FigureFull_Band", "section": "Layout A",
-      "title": "그림 한 장을 크게 보여줄 때",
+      "title": "그림 1개 전면 배치",
       "figure": {"path": "figs/example_wide.png", "highlights": [{"box": [0.62, 0.12, 0.33, 0.55]}]},
       "band": ["밴드 1단: 이 슬라이드의 **핵심 주장**을 한 줄로 작성함", "> 2단: 근거와 수치를 덧붙임 (예: 기존 대비 +4.2%p)", "그림 위 강조 틀은 figure.highlights로 지정"]
     },
     {
       "layout": "B_FigureTwo_Band", "section": "Layout B",
-      "title": "두 그림을 나란히 비교할 때",
+      "title": "그림 2개 비교",
       "figure_left": "figs/example_small.png",
       "figure_right": "figs/example_small2.png",
       "band": ["왼쪽과 오른쪽의 차이를 한 줄로 정리함", "> 비교 기준이 같은 두 그림에만 사용"]
     },
     {
       "layout": "C_FigureExplain_Band", "section": "Layout C",
-      "title": "그림과 해설을 함께 둘 때",
+      "title": "그림과 해설",
       "figure": "figs/example_small.png",
       "explain": ["해설은 짧은 항목으로", "> 그림의 어느 부분을 볼지", "> 읽는 순서", "__Ours__가 가장 높음"],
       "band": ["그림에서 얻는 결론 하나를 적음"]
     },
     {
       "layout": "D_TopBand_Wide", "section": "Layout D",
-      "title": "표처럼 세로로 큰 개체를 넣을 때",
+      "title": "표·차트 배치",
       "band": ["표에서 볼 결론을 먼저 제시함", "> Ours 행은 자동으로 강조색 적용"],
       "shapes": [
         {"type": "table", "box": [1.0, 4.7, 18.0, 0], "row_h": 0.72, "size": 22, "ours_rows": [3],
@@ -152,13 +152,13 @@
     },
     {
       "layout": "E_TwoColumn", "section": "Layout E",
-      "title": "두 관점을 나란히 정리할 때",
+      "title": "2단 비교 정리",
       "header_left": "장점", "body_left": ["첫 번째 항목", "> 보조 설명", "두 번째 항목", "> 보조 설명"],
       "header_right": "한계", "body_right": ["첫 번째 항목", "> 보조 설명", "두 번째 항목", "> 보조 설명"]
     },
     {
       "layout": "F_Diagram_Band", "section": "Layout F",
-      "title": "도형으로 구조를 설명할 때",
+      "title": "도형·수식 구성",
       "shapes": [
         {"type": "flow", "frame": "zone", "box": [0.02, 0.12, 0.96, 0.3], "items": ["Query", "Policy", "Verifier", "Reward"], "key": [2]},
         {"type": "box", "frame": "zone", "box": [0.02, 0.6, 0.3, 0.28], "kind": "muted", "text": "기존: 정답 여부만 사용"},
@@ -170,7 +170,7 @@
     },
     {
       "layout": "G_TitleOnly", "section": "Layout G",
-      "title": "자유 구성: 네이티브 차트 예시",
+      "title": "네이티브 차트",
       "shapes": [
         {"type": "chart", "box": [1.0, 2.4, 11.0, 7.8], "kind": "bar", "categories": ["GSM8K", "MATH", "AIME"],
          "series": [{"name": "Baseline", "values": [61.2, 32.4, 6.7], "role": "baseline"},

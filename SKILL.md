@@ -13,6 +13,7 @@ description: DSBA 연구실 템플릿(Pantone 팔레트, NanumSquare)으로 논�
 
 ```bash
 pip install python-pptx pymupdf pillow matplotlib   # 필요 시 --break-system-packages
+# 수식: pandoc (brew install pandoc / apt install pandoc, 또는 pip install pypandoc-binary)
 # 렌더링 검토용: LibreOffice(soffice), poppler(pdftoppm), NanumSquare 폰트
 ```
 
@@ -33,6 +34,8 @@ pip install python-pptx pymupdf pillow matplotlib   # 필요 시 --break-system-
 - 템플릿은 `assets/research-slides-template.pptx`입니다. 사용자가 다른 복사본을 주더라도 레이아웃 이름이 같으면 그 파일을 `--template`으로 씁니다.
 - 텍스트는 placeholder 역할에만 넣습니다. 레이아웃에 역할이 있는 곳에 자유 텍스트 상자를 만들지 않습니다.
 - 도형은 `shapes`의 `kind`로만 고르고, 색을 직접 지정하지 않습니다. **같은 종류의 도형은 같은 색**입니다. 역할이 다를 때만 다른 kind를 씁니다. 슬라이드 하나에 `key`/`emph`는 1~2개까지만 씁니다.
+- **제목은 명사 위주 4단어 이내, 명사형으로 끝맺습니다** (예: `RLHF vs SFT`, `실험 결과`, `Training Dynamics`, `J-space의 용량`). 주장·결론은 제목이 아니라 밴드 1단에 씁니다. 빌드 시 규칙을 어기면 `WARNING`이 나옵니다.
+- **수식은 PowerPoint 수식(OMML)으로 넣습니다.** 문장 안에서는 `$...$`, 단독 수식은 `shapes`의 `math`(LaTeX)입니다. 논문 수식을 이미지로 캡쳐하지 않습니다. pandoc이 필요합니다.
 - 글자 강조는 `**핵심어**`(Dusty Cedar 굵게)와 `__구조 용어__`(Navy 굵게)만 씁니다. 한 줄에 하나를 넘지 않게 합니다.
 - 논문 그림은 원본 캡쳐를 비율을 유지한 채 씁니다. 다시 그리지 않고, 강조는 `highlights` 틀로만 표시합니다.
 - 밴드: 1단은 주장, 2단(`> `)은 근거·수치입니다. 32pt 기준 한 줄 40자, 3~4줄까지이며 명사형으로 끝맺습니다(~함/~임).
@@ -61,7 +64,8 @@ pip install python-pptx pymupdf pillow matplotlib   # 필요 시 --break-system-
 ## 전달 전 점검
 
 - [ ] `render_check.py` 경고 0개, contact sheet 육안 확인
-- [ ] 슬라이드마다 핵심 메시지 하나, 제목만 읽어도 흐름이 이어지는지
+- [ ] 제목이 명사형 4단어 이내인지 (빌드 WARNING 0개), 핵심 메시지는 밴드에 있는지
+- [ ] 수식이 PowerPoint 수식인지 (이미지 아님)
 - [ ] figure 번호와 수치가 논문과 일치하는지
 - [ ] 강조색이 역할대로만 쓰였는지 (같은 도형에 다른 색 없음)
 - [ ] 영상용이면 모든 슬라이드에 notes

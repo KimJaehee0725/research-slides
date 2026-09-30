@@ -168,7 +168,7 @@ CARD_LINE = "accent1:30"
 def common_ph(ids, source=True):
     s = ph(ids, "section", *G["section"], type_="body", idx=10, prompt="Section",
            lst=ppr(1, 22, "tx1:75"), anchor="ctr", ins=(0.05, 0, 0.05, 0))
-    s += ph(ids, "title", *G["title"], type_="title", prompt="슬라이드 제목: 한 장의 핵심 메시지",
+    s += ph(ids, "title", *G["title"], type_="title", prompt="제목: 명사 위주 4단어 이내",
             anchor="t", ins=(0.05, 0, 0.05, 0))
     if source:
         s += ph(ids, "source", *G["source"], type_="body", idx=11,

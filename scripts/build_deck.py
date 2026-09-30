@@ -16,6 +16,7 @@ Rules enforced here so decks stay consistent:
 """
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -142,13 +143,17 @@ def draw_shapes(slide, layout_name, shapes, base):
             C.image_fit(slide, resolve(base, s["path"]), x, y, w, h, crop=s.get("crop"),
                         align=s.get("align", "c"))
         elif t == "math":
-            png = C.math_image(s["tex"], size=s.get("size", 40))
-            C.image_fit(slide, png, x, y, w, h, align=s.get("align", "c"))
+            if s.get("render") == "image":  # only when an editable equation is not wanted
+                png = C.math_image(s["tex"], size=s.get("size", 40))
+                C.image_fit(slide, png, x, y, w, h, align=s.get("align", "c"))
+            else:
+                C.equation(slide, x, y, w, h, s["tex"], size=s.get("size", 36),
+                           align=s.get("align", "c"))
         elif t == "table":
             C.table(slide, x, y, w, s["rows"], col_widths=s.get("col_widths"),
                     size=s.get("size", 20), row_h=s.get("row_h", 0.6),
                     ours_rows=set(s.get("ours_rows", [])), key_cells=s.get("key_cells", []),
-                    first_col=s.get("first_col", True))
+                    first_col=s.get("first_col", True), align=s.get("align", "c"))
         elif t == "chart":
             C.chart(slide, x, y, w, h, s["categories"], s["series"], kind=s.get("kind", "bar"),
                     ylabel=s.get("ylabel"), legend=s.get("legend", True), labels=s.get("labels", False),
@@ -159,12 +164,33 @@ def draw_shapes(slide, layout_name, shapes, base):
             raise SystemExit(f"unknown shape type '{t}'")
 
 
+TITLE_MAX_WORDS = 4
+_SKIP = {"vs", "vs.", "·", "-", "–", "—", "&", "/", ":"}
+
+
+def lint_title(title):
+    """Lab title style: noun phrase, at most 4 words, noun-form ending (no sentence)."""
+    if not title or not isinstance(title, str):
+        return None
+    words = [w for w in re.split(r"\s+", title.strip()) if w and w not in _SKIP]
+    probs = []
+    if len(words) > TITLE_MAX_WORDS:
+        probs.append(f"{len(words)} words (max {TITLE_MAX_WORDS})")
+    if re.search(r"(다|[어아해세이]요|죠|까|[.!?])$", title.strip()):
+        probs.append("sentence ending; use a noun phrase")
+    return f"title '{title}': " + ", ".join(probs) if probs else None
+
+
 def add_slide(prs, sd, meta, base):
     layout = find_layout(prs, sd["layout"])
     slide = prs.slides.add_slide(layout)
     roles = layout_roles(layout)
     by_idx = {p.placeholder_format.idx: p for p in slide.placeholders}
 
+    if sd["layout"] in CONTENT_LAYOUTS:
+        w_ = lint_title(sd.get("title"))
+        if w_:
+            WARNINGS.append(w_)
     values = dict(sd)
     if sd["layout"] in CONTENT_LAYOUTS and "source" not in values and meta.get("source"):
         values["source"] = meta["source"]
@@ -204,6 +230,8 @@ def add_slide(prs, sd, meta, base):
 
     if sd.get("shapes"):
         draw_shapes(slide, sd["layout"], sd["shapes"], base)
+    import rs_math
+    rs_math.wrap_inline_math(slide)  # after all text is written
     if sd.get("notes"):
         slide.notes_slide.notes_text_frame.text = sd["notes"]
     if sd.get("hidden"):
