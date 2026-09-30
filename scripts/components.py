@@ -442,3 +442,73 @@ def swatch(slide, x, y, w, h, color, label="", sub=""):
     _no_shadow(sp)
     textbox(slide, x - 0.1, y + w + 0.1, w + 1.2, h - w - 0.1, [label, sub], style="body", size=16,
             levels=False)
+
+
+# --------------------------------------------------------------------------
+# Panels: re-flow the panels of a figure into rows that fill a box
+# --------------------------------------------------------------------------
+def _aspect(path, crop=None):
+    from PIL import Image
+    with Image.open(path) as im:
+        w, h = im.size
+    l, t, r, b = crop or (0, 0, 0, 0)
+    return (w * (1 - l - r)) / (h * (1 - t - b))
+
+
+def _row_layout(ars_rows, W, H, gap, label_h):
+    """Heights per row so every row spans W, then scale down to fit H."""
+    hs = [(W - gap * (len(r) - 1)) / sum(r) for r in ars_rows]
+    fixed = gap * (len(ars_rows) - 1) + label_h * len(ars_rows)
+    s = min(1.0, (H - fixed) / sum(hs)) if sum(hs) > 0 else 1.0
+    return [h * s for h in hs], s
+
+
+def best_rows(ars, W, H, gap, label_h, max_rows=3):
+    """Split items (in order) into rows that give the largest total area."""
+    n = len(ars)
+    best, best_area = [list(range(n))], -1
+    def splits(i, rows_left):
+        if rows_left == 1:
+            yield [list(range(i, n))]
+            return
+        for j in range(i + 1, n - rows_left + 2):
+            for rest in splits(j, rows_left - 1):
+                yield [list(range(i, j))] + rest
+    for r in range(1, min(max_rows, n) + 1):
+        for rows in splits(0, r):
+            hs, _ = _row_layout([[ars[k] for k in row] for row in rows], W, H, gap, label_h)
+            area = sum(hs[i] * hs[i] * ars[k] for i, row in enumerate(rows) for k in row)
+            if area > best_area:
+                best, best_area = rows, area
+    return best
+
+
+def panels(slide, x, y, w, h, items, rows=None, gap=0.3, label_size=20):
+    """items: [{"path": png, "crop": [l,t,r,b]?, "label": str?, "highlights": [...]?}]
+    rows: list of index lists; None = choose the arrangement with the largest panels.
+    Returns the placed boxes [(x, y, w, h), ...] in item order."""
+    ars = [_aspect(it["path"], it.get("crop")) for it in items]
+    label_h = 0.5 if any(it.get("label") for it in items) else 0.0
+    if rows is None:
+        rows = best_rows(ars, w, h, gap, label_h)
+    hs, _ = _row_layout([[ars[k] for k in row] for row in rows], w, h, gap, label_h)
+    total_h = sum(hs) + gap * (len(rows) - 1) + label_h * len(rows)
+    cy = y + (h - total_h) / 2
+    placed = [None] * len(items)
+    for row, rh in zip(rows, hs):
+        rw = sum(ars[k] * rh for k in row) + gap * (len(row) - 1)
+        cx = x + (w - rw) / 2
+        for k in row:
+            it, pw = items[k], ars[k] * rh
+            if it.get("label"):
+                textbox(slide, cx, cy, pw, label_h, it["label"], style="struct", size=label_size,
+                        align="l", anchor="m", levels=False, line_spacing=1.0)
+            py = cy + label_h
+            _, (dx, dy, dw, dh) = image_fit(slide, it["path"], cx, py, pw, rh, crop=it.get("crop"))
+            for hl in it.get("highlights", []):
+                hx, hy, hw, hh = hl["box"] if isinstance(hl, dict) else hl
+                highlight(slide, dx + hx * dw, dy + hy * dh, hw * dw, hh * dh)
+            placed[k] = (dx, dy, dw, dh)
+            cx += pw + gap
+        cy += rh + label_h + gap
+    return placed

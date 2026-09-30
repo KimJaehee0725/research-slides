@@ -78,6 +78,7 @@
 | `image` | path, crop, align | 추가 이미지 (아이콘, 생성 이미지) |
 | `math` | tex, size(36), align, render | PowerPoint 수식(OMML, 편집 가능). 대체 이미지 포함. `render: "image"`면 이미지로만 |
 | `table` | rows, col_widths, size(20), row_h(0.6), ours_rows[], key_cells[[r,c]], first_col, align(c/l) | 표 (box의 h는 무시). 문장 열은 `align: "l"` |
+| `panels` | items[{path, crop?, label?, highlights?}], source, rows, gap(0.3), label_size | 패널 여러 개를 행으로 재배치. `rows` 생략 시 가장 크게 보이는 배치를 자동 선택 (순서 유지) |
 | `chart` | categories, series[{name, values, role}], kind(bar/hbar/line), ylabel, labels, number_format | PowerPoint 네이티브 차트 |
 
 ### box `kind`
@@ -96,6 +97,24 @@
 
 `ours` (Dusty Cedar), `baseline` (Ultimate Gray), `alt` (Provence), `alt2` (Navy), `ok`, `note`.
 Ours가 둘 이상이면 가장 중요한 것 하나만 `ours`로 두고 나머지는 `alt`로 둡니다.
+
+## 패널 재배치 (`panels`)
+
+원본 figure의 배치가 슬라이드 영역과 맞지 않을 때 씁니다.
+
+```bash
+python3 scripts/split_panels.py figs/fig27.png --out panels/fig27 --merge "2+3"   # 히트맵+컬러바 합치기
+```
+
+```json
+{"type": "panels", "frame": "zone", "box": [0, 0, 1, 1], "gap": 0.4,
+ "items": [{"path": "panels/fig27/p1.png"}, {"path": "panels/fig27/p2.png"},
+           {"path": "panels/fig29/p2.png", "label": "(b) ambiguous input"}]}
+```
+
+- `items`는 읽는 순서대로 둡니다. `rows: [[0, 1, 2], [3, 4]]`로 행을 직접 정할 수 있습니다.
+- 원본 한 장에서 바로 자를 때는 `"source": "fig.png"`와 item마다 `"crop": [l, t, r, b]`(`panels.json` 값)를 씁니다.
+- 다른 figure의 패널을 한 슬라이드에 섞어도 됩니다. 출처에는 figure 번호를 모두 적고 `재구성`을 붙입니다.
 
 ## 예시
 

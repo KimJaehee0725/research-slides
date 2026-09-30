@@ -23,7 +23,7 @@ pip install python-pptx pymupdf pillow matplotlib   # 필요 시 --break-system-
 
 1. **논문 읽기.** PDF 전체를 읽고 문제, 핵심 아이디어, 방법, 주요 결과, 한계를 정리합니다. `python3 scripts/crop_figure.py paper.pdf --list`로 figure·table 목록을 뽑습니다.
 2. **구성안 확인.** 슬라이드별 `레이아웃 · 제목 · 핵심 메시지 · 사용할 figure`를 표로 만들어 사용자에게 먼저 보여줍니다. 발표 길이나 대상을 모르면 이 단계에서 묻습니다. (세부: `references/workflow.md`)
-3. **그림 추출.** `crop_figure.py --auto "Figure 3"`로 잘라낸 뒤 **반드시 이미지를 직접 열어 확인**합니다. 잘림이 있으면 `--page N --grid`로 좌표를 보고 `--bbox`로 다시 자릅니다.
+3. **그림 추출과 재구성.** `crop_figure.py --auto "Figure 3"`로 잘라낸 뒤 **반드시 이미지를 직접 열어 확인**합니다. 잘림이 있으면 `--page N --grid`로 좌표를 보고 `--bbox`로 다시 자릅니다. 여러 패널로 된 그림은 `split_panels.py fig.png --out panels/fig`로 나눈 뒤 `preview.png`를 보고, 붙어야 할 조각은 `--merge`, 제목은 `--drop`으로 정리합니다.
 4. **spec 작성.** `references/spec.md` 스키마를 따릅니다. 예시는 `examples/pysr_example.json`에 있습니다.
 5. **생성.** `python3 scripts/build_deck.py deck.json out.pptx`
 6. **검토.** `python3 scripts/render_check.py out.pptx --out render/`로 경고를 확인하고 `render/contact.png`와 개별 슬라이드를 봅니다. 경고가 없고 눈으로 봐도 문제가 없을 때까지 spec을 고쳐 다시 생성합니다.
@@ -39,6 +39,7 @@ pip install python-pptx pymupdf pillow matplotlib   # 필요 시 --break-system-
 - **중앙 온점(·)과 긴 대시(—, –)는 슬라이드에 쓰지 않습니다.** 나열은 쉼표, 구분은 콜론(:)이나 `/`, 범위는 `-`(Fig. 30-31)로 씁니다. 빌드 시 경고가 나옵니다.
 - **줄간격은 기본 1.5**입니다(레이아웃과 텍스트 상자에 적용됨). 공간이 모자랄 때만 슬라이드에서 `"line_spacing": {"explain": 1.2}`처럼 조정합니다. 글자 크기는 줄이지 않습니다.
 - 글자 강조는 `**핵심어**`(Dusty Cedar 굵게)와 `__구조 용어__`(Navy 굵게)만 씁니다. 한 줄에 하나를 넘지 않게 합니다.
+- **원본 figure의 배치가 슬라이드와 맞지 않으면 잘라서 재배치합니다.** 그림이 영역의 60% 미만을 채우거나, 3+2 격자처럼 빈 곳이 크게 생기면 `scripts/split_panels.py`로 패널을 나누고 `panels` shape로 다시 배치합니다. 필요한 패널만 고르고, 뺀 내용은 밴드나 노트로 옮깁니다. 패널 내부(축, 데이터, 범례)는 편집하지 않고, 출처 끝에 `재구성`을 붙입니다.
 - 논문 그림은 원본 캡쳐를 비율을 유지한 채 씁니다. 다시 그리지 않고, 강조는 `highlights` 틀로만 표시합니다.
 - 밴드: 1단은 주장, 2단(`> `)은 근거·수치입니다. 32pt 기준 한 줄 40자, 3~4줄까지이며 명사형으로 끝맺습니다(~함/~임).
 - 수치, 인용, 출처는 논문에 있는 것만 씁니다. 근거 없는 수치나 익명 인용은 쓰지 않습니다.

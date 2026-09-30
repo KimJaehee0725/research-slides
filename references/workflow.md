@@ -52,6 +52,11 @@ python3 scripts/crop_figure.py paper.pdf --page 5 --bbox 104 68 508 358 --out fi
 - `--grid` 렌더의 눈금은 PDF 포인트(1/72 in, 좌상단 원점)이고, 이 값을 그대로 `--bbox`에 씁니다.
 - 자른 이미지는 반드시 열어서 확인합니다. 축 라벨이 잘렸거나 본문이 섞였으면 bbox로 다시 자릅니다.
 - 여러 패널 figure는 슬라이드에서 말할 패널만 자릅니다 (`fig4a.png`, `fig4b.png`).
+- 원본 배치가 슬라이드와 맞지 않으면 `split_panels.py`로 패널을 나누고 `panels`로 재배치합니다.
+  ```bash
+  python3 scripts/split_panels.py blog/overview.png --out panels/overview            # 1차 분할, preview.png 확인
+  python3 scripts/split_panels.py blog/overview.png --out panels/overview --drop 1 --merge "2+5,3+6"   # 제목 제거, 카드+캡션 합치기
+  ```
 
 ## 5. spec 작성과 생성
 

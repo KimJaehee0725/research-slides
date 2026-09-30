@@ -98,7 +98,8 @@ def place_figure(slide, ph, spec, base):
     if fill_ratio < 0.45:
         WARNINGS.append(f"figure '{Path(spec['path']).name}' fills only {fill_ratio:.0%} of its box "
                         f"({dw:.1f}x{dh:.1f} of {w:.1f}x{h:.1f} in): crop to the needed panel or "
-                        f"pick a layout whose box matches its aspect ratio (references/layouts.md)")
+                        f"pick a layout whose box matches its aspect ratio, or cut it with split_panels.py "
+                        f"and re-flow the panels with a `panels` shape (references/spec.md)")
     for hl in spec.get("highlights", []):
         hx, hy, hw, hh = hl["box"] if isinstance(hl, dict) else hl
         bx, by, bw, bh = dx + hx * dw, dy + hy * dh, hw * dw, hh * dh
@@ -159,6 +160,15 @@ def draw_shapes(slide, layout_name, shapes, base):
             C.chart(slide, x, y, w, h, s["categories"], s["series"], kind=s.get("kind", "bar"),
                     ylabel=s.get("ylabel"), legend=s.get("legend", True), labels=s.get("labels", False),
                     size=s.get("size", 18), number_format=s.get("number_format"))
+        elif t == "panels":
+            src = s.get("source")
+            items = []
+            for it in s["items"]:
+                it = dict(it)
+                it["path"] = str(resolve(base, it.get("path") or src))
+                items.append(it)
+            C.panels(slide, x, y, w, h, items, rows=s.get("rows"), gap=s.get("gap", 0.3),
+                     label_size=s.get("label_size", 20))
         elif t == "swatch":
             C.swatch(slide, x, y, w, h, s["color"], s.get("label", ""), s.get("sub", ""))
         else:

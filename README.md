@@ -50,8 +50,10 @@ scripts/
   rs_style.py                팔레트·폰트·치수 (단일 기준)
   make_template.py           템플릿 생성 (마스터, 레이아웃, 가이드 슬라이드)
   build_deck.py              spec → pptx
-  components.py              box / flow / arrow / highlight / table / chart / math
-  crop_figure.py             PDF에서 figure·table 추출
+  components.py              box / flow / arrow / highlight / table / chart / equation / panels
+  crop_figure.py             PDF에서 figure, table 추출
+  split_panels.py            여러 패널 figure를 패널별로 분할 (재배치용)
+  rs_math.py                 LaTeX → PowerPoint 수식(OMML)
   render_check.py            렌더링과 overflow·범위 검사
   describe_template.py       템플릿 레이아웃 표 출력
 assets/
