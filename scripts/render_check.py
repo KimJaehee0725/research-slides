@@ -50,6 +50,21 @@ def est_lines(text, size_pt, width_in):
     return lines
 
 
+def inherited_spacing(shape, slide):
+    """Line spacing multiple: explicit paragraph value, else the layout's list style."""
+    ls = shape.text_frame.paragraphs[0].line_spacing
+    if isinstance(ls, float):
+        return ls
+    if shape.is_placeholder:
+        idx = shape.placeholder_format.idx
+        for lp in slide.slide_layout.placeholders:
+            if lp.placeholder_format.idx == idx:
+                v = lp._element.xpath(".//a:lstStyle/a:lvl1pPr/a:lnSpc/a:spcPct/@val")
+                if v:
+                    return int(v[0]) / 100000
+    return 1.0
+
+
 def inherited_size(shape, slide):
     """Largest explicit run size, else the size defined by the layout placeholder."""
     sizes = [r.font.size.pt for p in shape.text_frame.paragraphs for r in p.runs if r.font.size]
@@ -84,7 +99,7 @@ def check(prs):
                 size = inherited_size(sh, slide)
                 pad = 0.8 if sh.is_placeholder and sh.placeholder_format.idx == 12 else 0.3
                 lines = est_lines(sh.text_frame.text, size, max(w - pad, 0.5))
-                need = lines * size * 1.25 / 72 + 0.1
+                need = lines * size * 1.2 * inherited_spacing(sh, slide) / 72 + 0.1
                 if need > h * 1.08:
                     warns.append(f"slide {n}: text in '{sh.name}' may overflow "
                                  f"(~{lines} lines at {size:.0f}pt need {need:.1f} in, box {h:.1f} in)")

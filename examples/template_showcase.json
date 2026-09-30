@@ -1,13 +1,14 @@
 {
   "meta": {
-    "title": "DSBA Papers You Should Read — research-slides template",
+    "title": "DSBA Papers You Should Read: research-slides template",
     "date": "20XX년 QX",
-    "footer": "Papers You Should Read  ·  DSBA Lab",
+    "footer": "Papers You Should Read  |  DSBA Lab",
     "source": "First Author et al., “Paper Title”, Venue Year"
   },
   "slides": [
     {
-      "layout": "Guide", "hidden": true,
+      "layout": "Guide",
+      "hidden": true,
       "title": "이 템플릿은 research-slides 스킬로 작성합니다",
       "body": [
         "Claude에게: 이 파일로 발표 자료를 만들거나 고칠 때는 **research-slides 스킬**을 사용할 것",
@@ -16,94 +17,394 @@
         "도형을 복사해서 옮기지 않음: 레이아웃을 고르고 placeholder 역할(title, figure, band …)을 채움",
         "템플릿 자체를 바꿀 때는 scripts/make_template.py와 rs_style.py를 수정한 뒤 다시 생성",
         "> 이 파일을 PowerPoint에서 직접 고치면 스킬의 레이아웃 정의와 어긋남",
-        "숨김 가이드 슬라이드는 슬라이드 쇼·영상 녹화에 나오지 않음"
+        "숨김 가이드 슬라이드는 슬라이드 쇼, 영상 녹화에 나오지 않음"
       ]
     },
     {
-      "layout": "Guide", "hidden": true,
-      "title": "색상 체계 — Pantone 기반 팔레트 A",
-      "body": ["차분한 네이비를 축으로, 역할이 있을 때만 다른 색을 사용"],
+      "layout": "Guide",
+      "hidden": true,
+      "title": "색상 체계: Pantone 기반 팔레트 A",
+      "body": [
+        "차분한 네이비를 축으로, 역할이 있을 때만 다른 색을 사용"
+      ],
       "shapes": [
-        {"type": "swatch", "box": [1.2, 3.4, 1.5, 2.8], "color": "accent1", "label": "구조 · accent1", "sub": "Navy Peony 19-4029"},
-        {"type": "swatch", "box": [4.1, 3.4, 1.5, 2.8], "color": "accent2", "label": "핵심 강조 · accent2", "sub": "Dusty Cedar 18-1630"},
-        {"type": "swatch", "box": [7.0, 3.4, 1.5, 2.8], "color": "accent3", "label": "보조 · accent3", "sub": "Provence 16-4032"},
-        {"type": "swatch", "box": [9.9, 3.4, 1.5, 2.8], "color": "accent4", "label": "검증·정답 · accent4", "sub": "Aqua Sky 14-4811"},
-        {"type": "swatch", "box": [12.8, 3.4, 1.5, 2.8], "color": "accent5", "label": "낮은 우선 · accent5", "sub": "Mimosa 14-0848"},
-        {"type": "swatch", "box": [15.7, 3.4, 1.5, 2.8], "color": "accent6", "label": "중립 · accent6", "sub": "Ultimate Gray 17-5104"},
-        {"type": "text", "box": [1.1, 7.2, 17.5, 3.0], "size": 22, "text": [
-          "본문은 #262626, 보조 텍스트는 tx1 75%, 채움은 각 색의 8~35% 틴트만 사용",
-          "모든 색은 테마 색으로 지정되어 있어, 테마 색만 바꾸면 전체 덱이 함께 바뀜",
-          "hex는 Pantone TCX의 sRGB 근사값이며 화면 표시용"
-        ]}
+        {
+          "type": "swatch",
+          "box": [
+            1.2,
+            3.4,
+            1.5,
+            2.8
+          ],
+          "color": "accent1",
+          "label": "구조: accent1",
+          "sub": "Navy Peony 19-4029"
+        },
+        {
+          "type": "swatch",
+          "box": [
+            4.1,
+            3.4,
+            1.5,
+            2.8
+          ],
+          "color": "accent2",
+          "label": "핵심 강조: accent2",
+          "sub": "Dusty Cedar 18-1630"
+        },
+        {
+          "type": "swatch",
+          "box": [
+            7.0,
+            3.4,
+            1.5,
+            2.8
+          ],
+          "color": "accent3",
+          "label": "보조: accent3",
+          "sub": "Provence 16-4032"
+        },
+        {
+          "type": "swatch",
+          "box": [
+            9.9,
+            3.4,
+            1.5,
+            2.8
+          ],
+          "color": "accent4",
+          "label": "검증, 정답: accent4",
+          "sub": "Aqua Sky 14-4811"
+        },
+        {
+          "type": "swatch",
+          "box": [
+            12.8,
+            3.4,
+            1.5,
+            2.8
+          ],
+          "color": "accent5",
+          "label": "낮은 우선: accent5",
+          "sub": "Mimosa 14-0848"
+        },
+        {
+          "type": "swatch",
+          "box": [
+            15.7,
+            3.4,
+            1.5,
+            2.8
+          ],
+          "color": "accent6",
+          "label": "중립: accent6",
+          "sub": "Ultimate Gray 17-5104"
+        },
+        {
+          "type": "text",
+          "box": [
+            1.1,
+            7.2,
+            17.5,
+            3.0
+          ],
+          "size": 22,
+          "text": [
+            "본문은 #262626, 보조 텍스트는 tx1 75%, 채움은 각 색의 8~35% 틴트만 사용",
+            "모든 색은 테마 색으로 지정되어 있어, 테마 색만 바꾸면 전체 덱이 함께 바뀜",
+            "hex는 Pantone TCX의 sRGB 근사값이며 화면 표시용"
+          ]
+        }
       ]
     },
     {
-      "layout": "Guide", "hidden": true,
-      "title": "도형 규칙 — 같은 종류는 같은 색, 역할이 있을 때만 다른 색",
-      "body": ["도형은 색이 아니라 종류(kind)로 고름. 한 슬라이드의 강조(key·emph)는 1~2개까지"],
+      "layout": "Guide",
+      "hidden": true,
+      "title": "도형 규칙: 같은 종류는 같은 색, 역할이 있을 때만 다른 색",
+      "body": [
+        "도형은 색이 아니라 종류(kind)로 고름. 한 슬라이드의 강조(key, emph)는 1~2개까지"
+      ],
       "shapes": [
-        {"type": "box", "box": [1.2, 3.3, 3.8, 1.2], "kind": "default", "text": "default"},
-        {"type": "text", "box": [1.2, 4.6, 3.8, 1.1], "size": 16, "style": "muted", "levels": false, "text": ["일반 모듈·단계"]},
-        {"type": "box", "box": [5.6, 3.3, 3.8, 1.2], "kind": "key", "text": "key"},
-        {"type": "text", "box": [5.6, 4.6, 3.8, 1.1], "size": 16, "style": "muted", "text": ["논문이 제안한 핵심 요소"]},
-        {"type": "box", "box": [10.0, 3.3, 3.8, 1.2], "kind": "emph", "text": "emph"},
-        {"type": "text", "box": [10.0, 4.6, 3.8, 1.1], "size": 16, "style": "muted", "text": ["문제점·한계·핵심 주장"]},
-        {"type": "box", "box": [14.4, 3.3, 3.8, 1.2], "kind": "ok", "text": "ok"},
-        {"type": "text", "box": [14.4, 4.6, 3.8, 1.1], "size": 16, "style": "muted", "text": ["검증 통과·정답"]},
-        {"type": "box", "box": [1.2, 6.0, 3.8, 1.2], "kind": "note", "text": "note"},
-        {"type": "text", "box": [1.2, 7.3, 3.8, 1.1], "size": 16, "style": "muted", "text": ["참고·낮은 우선순위"]},
-        {"type": "box", "box": [5.6, 6.0, 3.8, 1.2], "kind": "muted", "text": "muted"},
-        {"type": "text", "box": [5.6, 7.3, 3.8, 1.1], "size": 16, "style": "muted", "text": ["baseline·비활성"]},
-        {"type": "box", "box": [10.0, 6.0, 3.8, 1.2], "kind": "outline", "text": "outline"},
-        {"type": "text", "box": [10.0, 7.3, 3.8, 1.1], "size": 16, "style": "muted", "text": ["묶음 틀·컨테이너"]},
-        {"type": "arrow", "from": [14.5, 6.35], "to": [16.2, 6.35]},
-        {"type": "arrow", "from": [14.5, 6.95], "to": [16.2, 6.95], "kind": "key"},
-        {"type": "highlight", "box": [16.6, 6.0, 1.6, 1.2]},
-        {"type": "text", "box": [14.4, 7.3, 4.2, 1.1], "size": 16, "style": "muted", "text": ["화살표 default·key / 그림 위 강조 틀"]},
-        {"type": "text", "box": [1.2, 8.7, 17.0, 1.4], "size": 20, "text": [
-          "글자 강조: **핵심어**는 Dusty Cedar 굵게, __구조 용어__는 Navy 굵게 (spec에서 **…** / __…__)",
-          "차트·표: Ours = accent2, baseline = accent6, 나머지 = accent3 → accent1 순서"
-        ]}
+        {
+          "type": "box",
+          "box": [
+            1.2,
+            3.3,
+            3.8,
+            1.2
+          ],
+          "kind": "default",
+          "text": "default"
+        },
+        {
+          "type": "text",
+          "box": [
+            1.2,
+            4.6,
+            3.8,
+            1.1
+          ],
+          "size": 16,
+          "style": "muted",
+          "levels": false,
+          "text": [
+            "일반 모듈, 단계"
+          ]
+        },
+        {
+          "type": "box",
+          "box": [
+            5.6,
+            3.3,
+            3.8,
+            1.2
+          ],
+          "kind": "key",
+          "text": "key"
+        },
+        {
+          "type": "text",
+          "box": [
+            5.6,
+            4.6,
+            3.8,
+            1.1
+          ],
+          "size": 16,
+          "style": "muted",
+          "text": [
+            "논문이 제안한 핵심 요소"
+          ]
+        },
+        {
+          "type": "box",
+          "box": [
+            10.0,
+            3.3,
+            3.8,
+            1.2
+          ],
+          "kind": "emph",
+          "text": "emph"
+        },
+        {
+          "type": "text",
+          "box": [
+            10.0,
+            4.6,
+            3.8,
+            1.1
+          ],
+          "size": 16,
+          "style": "muted",
+          "text": [
+            "문제점, 한계, 핵심 주장"
+          ]
+        },
+        {
+          "type": "box",
+          "box": [
+            14.4,
+            3.3,
+            3.8,
+            1.2
+          ],
+          "kind": "ok",
+          "text": "ok"
+        },
+        {
+          "type": "text",
+          "box": [
+            14.4,
+            4.6,
+            3.8,
+            1.1
+          ],
+          "size": 16,
+          "style": "muted",
+          "text": [
+            "검증 통과, 정답"
+          ]
+        },
+        {
+          "type": "box",
+          "box": [
+            1.2,
+            6.0,
+            3.8,
+            1.2
+          ],
+          "kind": "note",
+          "text": "note"
+        },
+        {
+          "type": "text",
+          "box": [
+            1.2,
+            7.3,
+            3.8,
+            1.1
+          ],
+          "size": 16,
+          "style": "muted",
+          "text": [
+            "참고, 낮은 우선순위"
+          ]
+        },
+        {
+          "type": "box",
+          "box": [
+            5.6,
+            6.0,
+            3.8,
+            1.2
+          ],
+          "kind": "muted",
+          "text": "muted"
+        },
+        {
+          "type": "text",
+          "box": [
+            5.6,
+            7.3,
+            3.8,
+            1.1
+          ],
+          "size": 16,
+          "style": "muted",
+          "text": [
+            "baseline, 비활성"
+          ]
+        },
+        {
+          "type": "box",
+          "box": [
+            10.0,
+            6.0,
+            3.8,
+            1.2
+          ],
+          "kind": "outline",
+          "text": "outline"
+        },
+        {
+          "type": "text",
+          "box": [
+            10.0,
+            7.3,
+            3.8,
+            1.1
+          ],
+          "size": 16,
+          "style": "muted",
+          "text": [
+            "묶음 틀, 컨테이너"
+          ]
+        },
+        {
+          "type": "arrow",
+          "from": [
+            14.5,
+            6.35
+          ],
+          "to": [
+            16.2,
+            6.35
+          ]
+        },
+        {
+          "type": "arrow",
+          "from": [
+            14.5,
+            6.95
+          ],
+          "to": [
+            16.2,
+            6.95
+          ],
+          "kind": "key"
+        },
+        {
+          "type": "highlight",
+          "box": [
+            16.6,
+            6.0,
+            1.6,
+            1.2
+          ]
+        },
+        {
+          "type": "text",
+          "box": [
+            14.4,
+            7.3,
+            4.2,
+            1.1
+          ],
+          "size": 16,
+          "style": "muted",
+          "text": [
+            "화살표 default, key / 그림 위 강조 틀"
+          ]
+        },
+        {
+          "type": "text",
+          "box": [
+            1.2,
+            8.7,
+            17.0,
+            1.4
+          ],
+          "size": 20,
+          "text": [
+            "글자 강조: **핵심어**는 Dusty Cedar 굵게, __구조 용어__는 Navy 굵게 (spec에서 **…** / __…__)",
+            "차트, 표: Ours = accent2, baseline = accent6, 나머지 = accent3 → accent1 순서"
+          ]
+        }
       ]
     },
     {
-      "layout": "Guide", "hidden": true,
+      "layout": "Guide",
+      "hidden": true,
       "title": "레이아웃 목록",
       "body": [
-        "Title — 표지 (논문 제목, 인용, 발표자, 학회 로고)",
-        "Contents — 목차 겸 섹션 구분, 현재 섹션만 강조",
-        "A_FigureFull_Band — 그림 1개 전면 + 하단 밴드",
-        "B_FigureTwo_Band — 그림 2개 비교 + 하단 밴드",
-        "C_FigureExplain_Band — 좌 그림 + 우 해설 + 하단 밴드",
-        "D_TopBand_Wide — 상단 밴드 + 넓은 표·차트",
-        "E_TwoColumn — 2단 카드 (비교·결론)",
-        "F_Diagram_Band — 도형·수식 자유 영역 + 하단 밴드",
-        "G_TitleOnly — 제목만 (자유 구성, 부록) / H_Statement — 핵심 질문·한 문장 요약",
-        "Closing — 마무리 / Guide — 숨김 가이드 전용"
+        "Title: 표지 (논문 제목, 인용, 발표자, 학회 로고)",
+        "Contents: 목차 겸 섹션 구분, 현재 섹션만 강조",
+        "A_FigureFull_Band: 그림 1개 전면 + 하단 밴드",
+        "B_FigureTwo_Band: 그림 2개 비교 + 하단 밴드",
+        "C_FigureExplain_Band: 좌 그림 + 우 해설 + 하단 밴드",
+        "D_TopBand_Wide: 상단 밴드 + 넓은 표, 차트",
+        "E_TwoColumn: 2단 카드 (비교, 결론)",
+        "F_Diagram_Band: 도형, 수식 자유 영역 + 하단 밴드",
+        "G_TitleOnly: 제목만 (자유 구성, 부록) / H_Statement: 핵심 질문, 한 문장 요약",
+        "Closing: 마무리 / Guide: 숨김 가이드 전용"
       ]
     },
     {
-      "layout": "Guide", "hidden": true,
+      "layout": "Guide",
+      "hidden": true,
       "title": "글쓰기와 내레이션",
       "body": [
         "제목은 명사 위주 4단어 이내, 명사형으로 끝맺음 (예: RLHF vs SFT, 실험 결과, Training Dynamics)",
-        "한 장에 핵심 메시지 하나: 주장은 제목이 아니라 밴드 1단에, 근거·수치는 2단에 (32pt 기준 한 줄 40자, 3~4줄)",
+        "한 장에 핵심 메시지 하나: 주장은 제목이 아니라 밴드 1단에, 근거, 수치는 2단에 (32pt 기준 한 줄 40자, 3~4줄)",
         "> 종결은 명사형 (~함 / ~임 / ~확인)",
-        "그림은 논문 캡쳐를 그대로 쓰고, 중요한 영역만 강조 틀로 표시", "수식은 PowerPoint 수식으로: 본문 안은 $...$, 단독 수식은 math 컴포넌트 (LaTeX 입력)",
+        "그림은 논문 캡쳐를 그대로 쓰고, 중요한 영역만 강조 틀로 표시",
+        "수식은 PowerPoint 수식으로: 본문 안은 $...$, 단독 수식은 math 컴포넌트 (LaTeX 입력)",
         "출처는 하단 바 오른쪽 source 칸에 (Author et al., Venue Year)",
         "내레이션 대본은 발표자 노트에 작성: 슬라이드당 30~60초, 합니다체 구어",
         "> 슬라이드 문장을 그대로 읽지 않고, 왜 중요한지와 다음 슬라이드로의 연결을 말함"
       ]
     },
     {
-      "layout": "Guide", "hidden": true,
+      "layout": "Guide",
+      "hidden": true,
       "title": "이미지 생성 스타일 (필요할 때만)",
       "body": [
         "친근한 손그림, 단순한 검은 외곽선, 분명한 특징. 한 이미지에 개념 하나",
         "> 연구마다 다른 캐릭터. 상반신 기본, 행동이 중요할 때만 전신을 먼저 제안",
         "추상 개념은 둥근 기하학 기호. 흑백 중심에 팔레트 역할대로 색 추가",
         "제외: 광택 3D, 과도한 그라데이션, 장식용 블롭, 이미지 속 글자",
-        "프롬프트 요소: 목적과 개념 · 대상과 캐릭터 · 표정과 행동 · 구도와 비율 · 팔레트와 배경",
+        "프롬프트 요소: 목적과 개념, 대상과 캐릭터, 표정과 행동, 구도와 비율, 팔레트와 배경",
         "> 전체 프롬프트 템플릿은 스킬의 references/style.md 참고"
       ]
     },
@@ -111,76 +412,302 @@
       "layout": "Title",
       "title": "논문 제목을 입력하세요",
       "citation": "First Author et al., “Paper Title”, Venue, Year, arXiv:XXXX.XXXXX",
-      "presenter": ["서울대학교 산업공학과", "DSBA 연구실", "발표자 이름"],
+      "presenter": [
+        "서울대학교 산업공학과",
+        "DSBA 연구실",
+        "발표자 이름"
+      ],
       "notes": "표지 예시. venue_logo 역할에 학회 로고 이미지를 넣을 수 있습니다."
     },
     {
       "layout": "Contents",
-      "toc": {"items": ["Background", "Method", "Experiments", "Discussion", "Conclusion"], "current": 1},
+      "toc": {
+        "items": [
+          "Background",
+          "Method",
+          "Experiments",
+          "Discussion",
+          "Conclusion"
+        ],
+        "current": 1
+      },
       "notes": "목차는 섹션이 바뀔 때마다 current만 바꿔 다시 넣어 섹션 구분 슬라이드로도 씁니다."
     },
     {
-      "layout": "A_FigureFull_Band", "section": "Layout A",
+      "layout": "A_FigureFull_Band",
+      "section": "Layout A",
       "title": "그림 1개 전면 배치",
-      "figure": {"path": "figs/example_wide.png", "highlights": [{"box": [0.62, 0.12, 0.33, 0.55]}]},
-      "band": ["밴드 1단: 이 슬라이드의 **핵심 주장**을 한 줄로 작성함", "> 2단: 근거와 수치를 덧붙임 (예: 기존 대비 +4.2%p)", "그림 위 강조 틀은 figure.highlights로 지정"]
+      "figure": {
+        "path": "figs/example_wide.png",
+        "highlights": [
+          {
+            "box": [
+              0.62,
+              0.12,
+              0.33,
+              0.55
+            ]
+          }
+        ]
+      },
+      "band": [
+        "밴드 1단: 이 슬라이드의 **핵심 주장**을 한 줄로 작성함",
+        "> 2단: 근거와 수치를 덧붙임 (예: 기존 대비 +4.2%p)",
+        "그림 위 강조 틀은 figure.highlights로 지정"
+      ]
     },
     {
-      "layout": "B_FigureTwo_Band", "section": "Layout B",
+      "layout": "B_FigureTwo_Band",
+      "section": "Layout B",
       "title": "그림 2개 비교",
       "figure_left": "figs/example_small.png",
       "figure_right": "figs/example_small2.png",
-      "band": ["왼쪽과 오른쪽의 차이를 한 줄로 정리함", "> 비교 기준이 같은 두 그림에만 사용"]
+      "band": [
+        "왼쪽과 오른쪽의 차이를 한 줄로 정리함",
+        "> 비교 기준이 같은 두 그림에만 사용"
+      ]
     },
     {
-      "layout": "C_FigureExplain_Band", "section": "Layout C",
+      "layout": "C_FigureExplain_Band",
+      "section": "Layout C",
       "title": "그림과 해설",
       "figure": "figs/example_small.png",
-      "explain": ["해설은 짧은 항목으로", "> 그림의 어느 부분을 볼지", "> 읽는 순서", "__Ours__가 가장 높음"],
-      "band": ["그림에서 얻는 결론 하나를 적음"]
-    },
-    {
-      "layout": "D_TopBand_Wide", "section": "Layout D",
-      "title": "표·차트 배치",
-      "band": ["표에서 볼 결론을 먼저 제시함", "> Ours 행은 자동으로 강조색 적용"],
-      "shapes": [
-        {"type": "table", "box": [1.0, 4.7, 18.0, 0], "row_h": 0.72, "size": 22, "ours_rows": [3],
-         "col_widths": [5.0, 4.33, 4.33, 4.34],
-         "rows": [["Method", "GSM8K", "MATH", "Avg."], ["Baseline", "61.2", "32.4", "46.8"],
-                  ["+ SFT", "63.5", "34.0", "48.8"], ["Ours", "69.8", "38.9", "54.4"]]}
+      "explain": [
+        "해설은 짧은 항목으로",
+        "> 그림의 어느 부분을 볼지",
+        "> 읽는 순서",
+        "__Ours__가 가장 높음"
+      ],
+      "band": [
+        "그림에서 얻는 결론 하나를 적음"
       ]
     },
     {
-      "layout": "E_TwoColumn", "section": "Layout E",
-      "title": "2단 비교 정리",
-      "header_left": "장점", "body_left": ["첫 번째 항목", "> 보조 설명", "두 번째 항목", "> 보조 설명"],
-      "header_right": "한계", "body_right": ["첫 번째 항목", "> 보조 설명", "두 번째 항목", "> 보조 설명"]
-    },
-    {
-      "layout": "F_Diagram_Band", "section": "Layout F",
-      "title": "도형·수식 구성",
-      "shapes": [
-        {"type": "flow", "frame": "zone", "box": [0.02, 0.12, 0.96, 0.3], "items": ["Query", "Policy", "Verifier", "Reward"], "key": [2]},
-        {"type": "box", "frame": "zone", "box": [0.02, 0.6, 0.3, 0.28], "kind": "muted", "text": "기존: 정답 여부만 사용"},
-        {"type": "arrow", "frame": "zone", "from": [0.34, 0.74], "to": [0.42, 0.74]},
-        {"type": "box", "frame": "zone", "box": [0.44, 0.6, 0.3, 0.28], "kind": "emph", "text": "제안: 확신의 변화를 보상으로"},
-        {"type": "math", "frame": "zone", "box": [0.77, 0.58, 0.21, 0.32], "tex": "r_t = b_{t} - b_{t-1}", "size": 36}
+      "layout": "D_TopBand_Wide",
+      "section": "Layout D",
+      "title": "표, 차트 배치",
+      "band": [
+        "표에서 볼 결론을 먼저 제시함",
+        "> Ours 행은 자동으로 강조색 적용"
       ],
-      "band": ["같은 종류의 도형은 같은 색, **논문의 핵심 요소만** key로 표시함", "> flow·box·arrow·math 컴포넌트를 spec으로 배치"]
+      "shapes": [
+        {
+          "type": "table",
+          "box": [
+            1.0,
+            4.7,
+            18.0,
+            0
+          ],
+          "row_h": 0.72,
+          "size": 22,
+          "ours_rows": [
+            3
+          ],
+          "col_widths": [
+            5.0,
+            4.33,
+            4.33,
+            4.34
+          ],
+          "rows": [
+            [
+              "Method",
+              "GSM8K",
+              "MATH",
+              "Avg."
+            ],
+            [
+              "Baseline",
+              "61.2",
+              "32.4",
+              "46.8"
+            ],
+            [
+              "+ SFT",
+              "63.5",
+              "34.0",
+              "48.8"
+            ],
+            [
+              "Ours",
+              "69.8",
+              "38.9",
+              "54.4"
+            ]
+          ]
+        }
+      ]
     },
     {
-      "layout": "G_TitleOnly", "section": "Layout G",
+      "layout": "E_TwoColumn",
+      "section": "Layout E",
+      "title": "2단 비교 정리",
+      "header_left": "장점",
+      "body_left": [
+        "첫 번째 항목",
+        "> 보조 설명",
+        "두 번째 항목",
+        "> 보조 설명"
+      ],
+      "header_right": "한계",
+      "body_right": [
+        "첫 번째 항목",
+        "> 보조 설명",
+        "두 번째 항목",
+        "> 보조 설명"
+      ]
+    },
+    {
+      "layout": "F_Diagram_Band",
+      "section": "Layout F",
+      "title": "도형, 수식 구성",
+      "shapes": [
+        {
+          "type": "flow",
+          "frame": "zone",
+          "box": [
+            0.02,
+            0.12,
+            0.96,
+            0.3
+          ],
+          "items": [
+            "Query",
+            "Policy",
+            "Verifier",
+            "Reward"
+          ],
+          "key": [
+            2
+          ]
+        },
+        {
+          "type": "box",
+          "frame": "zone",
+          "box": [
+            0.02,
+            0.6,
+            0.3,
+            0.28
+          ],
+          "kind": "muted",
+          "text": "기존: 정답 여부만 사용"
+        },
+        {
+          "type": "arrow",
+          "frame": "zone",
+          "from": [
+            0.34,
+            0.74
+          ],
+          "to": [
+            0.42,
+            0.74
+          ]
+        },
+        {
+          "type": "box",
+          "frame": "zone",
+          "box": [
+            0.44,
+            0.6,
+            0.3,
+            0.28
+          ],
+          "kind": "emph",
+          "text": "제안: 확신의 변화를 보상으로"
+        },
+        {
+          "type": "math",
+          "frame": "zone",
+          "box": [
+            0.77,
+            0.58,
+            0.21,
+            0.32
+          ],
+          "tex": "r_t = b_{t} - b_{t-1}",
+          "size": 36
+        }
+      ],
+      "band": [
+        "같은 종류의 도형은 같은 색, **논문의 핵심 요소만** key로 표시함",
+        "> flow, box, arrow, math 컴포넌트를 spec으로 배치"
+      ]
+    },
+    {
+      "layout": "G_TitleOnly",
+      "section": "Layout G",
       "title": "네이티브 차트",
       "shapes": [
-        {"type": "chart", "box": [1.0, 2.4, 11.0, 7.8], "kind": "bar", "categories": ["GSM8K", "MATH", "AIME"],
-         "series": [{"name": "Baseline", "values": [61.2, 32.4, 6.7], "role": "baseline"},
-                    {"name": "+ SFT", "values": [63.5, 34.0, 8.1], "role": "alt"},
-                    {"name": "Ours", "values": [69.8, 38.9, 13.3], "role": "ours"}], "labels": true},
-        {"type": "text", "box": [12.6, 3.0, 6.6, 6.0], "size": 26, "bullets": true, "text": ["PowerPoint에서 바로 수정 가능한 차트", "> Ours = Dusty Cedar", "> baseline = Ultimate Gray", "논문 수치를 직접 옮길 때 사용"]}
+        {
+          "type": "chart",
+          "box": [
+            1.0,
+            2.4,
+            11.0,
+            7.8
+          ],
+          "kind": "bar",
+          "categories": [
+            "GSM8K",
+            "MATH",
+            "AIME"
+          ],
+          "series": [
+            {
+              "name": "Baseline",
+              "values": [
+                61.2,
+                32.4,
+                6.7
+              ],
+              "role": "baseline"
+            },
+            {
+              "name": "+ SFT",
+              "values": [
+                63.5,
+                34.0,
+                8.1
+              ],
+              "role": "alt"
+            },
+            {
+              "name": "Ours",
+              "values": [
+                69.8,
+                38.9,
+                13.3
+              ],
+              "role": "ours"
+            }
+          ],
+          "labels": true
+        },
+        {
+          "type": "text",
+          "box": [
+            12.6,
+            3.0,
+            6.6,
+            6.0
+          ],
+          "size": 26,
+          "bullets": true,
+          "text": [
+            "PowerPoint에서 바로 수정 가능한 차트",
+            "> Ours = Dusty Cedar",
+            "> baseline = Ultimate Gray",
+            "논문 수치를 직접 옮길 때 사용"
+          ]
+        }
       ]
     },
     {
-      "layout": "H_Statement", "section": "Layout H",
+      "layout": "H_Statement",
+      "section": "Layout H",
       "title": "Key Question",
       "statement": "정답 여부만으로 추론 과정을 평가할 수 있을까?",
       "support": "섹션을 여는 질문이나 결론 한 문장에 사용"
@@ -188,7 +715,7 @@
     {
       "layout": "Closing",
       "title": "감사합니다",
-      "subtitle": "Papers You Should Read  ·  20XX QX"
+      "subtitle": "Papers You Should Read  |  20XX QX"
     }
   ]
 }

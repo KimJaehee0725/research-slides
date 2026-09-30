@@ -142,7 +142,8 @@ def split_level(item):
     return len(m.group(1)), item[m.end():]
 
 
-BULLET = {0: ("Wingdings", "\uf0fc", 0.5), 1: ("Wingdings", "\uf0d8", 1.0), 2: ("Arial", "\u2013", 1.45)}
+BULLET = {0: ("Wingdings", "\uf0fc", 0.5), 1: ("Wingdings", "\uf0d8", 1.0), 2: ("Arial", "\u2022", 1.45)}
+LINE_SPACING = 1.5  # lab default for running text; override only when space demands it
 
 
 def _bullet(p, lvl, size):
@@ -163,7 +164,7 @@ def _bullet(p, lvl, size):
 
 
 def fill_text(tf, items, size=None, color=None, bold=None, levels=True, align=None,
-              bullets=False):
+              bullets=False, line_spacing=None):
     """Write a string or list of strings into a text frame (placeholder or box).
 
     bullets=True draws the lab bullets explicitly (for free text boxes; layout
@@ -179,6 +180,8 @@ def fill_text(tf, items, size=None, color=None, bold=None, levels=True, align=No
             _bullet(p, lvl, size)
         if align:
             p.alignment = {"l": PP_ALIGN.LEFT, "c": PP_ALIGN.CENTER, "r": PP_ALIGN.RIGHT}[align]
+        if line_spacing:
+            p.line_spacing = line_spacing
         add_runs(p, s, size=size, color=color, bold=bold)
 
 
@@ -232,14 +235,14 @@ def highlight(slide, x, y, w, h):
 
 
 def textbox(slide, x, y, w, h, text, style="body", size=24, align="l", anchor="t", levels=True,
-            bullets=False):
+            bullets=False, line_spacing=LINE_SPACING):
     color, bold = TEXT[style]
     tb = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
     tf = tb.text_frame
     tf.word_wrap = True
     tf.vertical_anchor = {"t": MSO_ANCHOR.TOP, "m": MSO_ANCHOR.MIDDLE, "b": MSO_ANCHOR.BOTTOM}[anchor]
     fill_text(tf, text, size=size, color=color, bold=bold, levels=levels, align=align,
-              bullets=bullets)
+              bullets=bullets, line_spacing=line_spacing)
     if bullets:  # second-level lines in muted grey, like the placeholders
         for p in tf.paragraphs:
             if p.level:

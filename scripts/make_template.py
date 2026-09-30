@@ -59,7 +59,7 @@ def ppr(lvl=1, sz=24, color="tx1", heavy=False, bold=False, bullet=None,
     if bullet is None:
         bu = "<a:buNone/>"
     else:
-        char = {"check": "", "arrow": "", "dash": "–"}[bullet]
+        char = {"check": "", "arrow": "", "dash": "•"}[bullet]
         font = "Arial" if bullet == "dash" else "Wingdings"
         bu = (f'<a:buClr>{clr_xml("accent1")}</a:buClr><a:buSzPct val="90000"/>'
               f'<a:buFont typeface="{font}" pitchFamily="2" charset="2"/>'
@@ -73,7 +73,7 @@ def ppr(lvl=1, sz=24, color="tx1", heavy=False, bold=False, bullet=None,
             f'</a:{tag}{lvl}pPr>')
 
 
-def bullet_levels(s1=32, s2=28, s3=24, lnSpc=130, spcBef=6):
+def bullet_levels(s1=32, s2=28, s3=24, lnSpc=150, spcBef=0):
     """Lab bullet system: lvl1 check, lvl2 arrow, lvl3 dash."""
     return (ppr(1, s1, "tx1", bullet="check", marL=0.55, indent=-0.55, lnSpc=lnSpc, spcBef=spcBef)
             + ppr(2, s2, "tx1:75", bullet="arrow", marL=1.1, indent=-0.5, lnSpc=lnSpc, spcBef=spcBef)
@@ -180,12 +180,12 @@ def common_ph(ids, source=True):
 def band_ph(ids, geo="band", prompt_top=False):
     return ph(ids, "band", *G[geo], type_="body", idx=12,
               prompt="핵심 주장을 한 줄로 (명사형 종결)", fill=BAND_FILL, anchor="ctr",
-              lst=bullet_levels(32, 28, 24, lnSpc=125, spcBef=4), ins=(0.4, 0.15, 0.4, 0.15))
+              lst=bullet_levels(32, 28, 24, lnSpc=150, spcBef=0), ins=(0.4, 0.1, 0.4, 0.1))
 
 
 def fig_ph(ids, name, idx, x, y, w, h):
     return ph(ids, name, x, y, w, h, type_="pic", idx=idx,
-              prompt="그림 삽입: 논문 figure·표 캡쳐 (비율 유지, 잘라내지 않음)",
+              prompt="그림 삽입: 논문 figure, 표 캡쳐 (비율 유지, 잘라내지 않음)",
               lst=ppr(1, 20, "accent6", algn="ctr"), anchor="ctr")
 
 
@@ -206,9 +206,9 @@ def L_title(ids, img):
             lst=ppr(1, 48, "accent1", heavy=True, algn="ctr", lnSpc=110), anchor="b")
     s += ph(ids, "citation", 1.5, 5.20, 17.0, 1.25, type_="subTitle", idx=1,
             prompt="First Author et al., “Paper Title”, Venue, Year, arXiv:XXXX.XXXXX",
-            lst=ppr(1, 20, "tx1:75", algn="ctr", lnSpc=120), anchor="t")
+            lst=ppr(1, 20, "tx1:75", algn="ctr", lnSpc=150), anchor="t")
     s += ph(ids, "presenter", 4.0, 6.85, 12.0, 2.3, type_="body", idx=11,
-            prompt="서울대학교 산업공학과", lst=ppr(1, 24, "tx1", algn="ctr", lnSpc=130),
+            prompt="서울대학교 산업공학과", lst=ppr(1, 24, "tx1", algn="ctr", lnSpc=150),
             anchor="t", autofit="none")
     s += rect(ids, "footer_bar", *G["footer_bar"], "accent1")
     return s
@@ -238,7 +238,7 @@ def L_B(ids, img):
 def L_C(ids, img):
     return (common_ph(ids) + fig_ph(ids, "figure", 13, 0.75, 2.25, 10.4, 5.10)
             + ph(ids, "explain", 11.55, 2.25, 7.7, 5.10, type_="body", idx=15,
-                 prompt="그림 해설 (짧은 항목)", lst=bullet_levels(26, 24, 22, lnSpc=120, spcBef=4),
+                 prompt="그림 해설 (짧은 항목)", lst=bullet_levels(26, 24, 22, lnSpc=150, spcBef=0),
                  anchor="ctr")
             + band_ph(ids))
 
@@ -246,7 +246,7 @@ def L_C(ids, img):
 def L_D(ids, img):
     return (common_ph(ids) + band_ph(ids, "band_top")
             + ph(ids, "wide", 0.75, 4.45, 18.5, 6.0, idx=16,
-                 prompt="표·차트·넓은 그림", lst=ppr(1, 20, "accent6", algn="ctr"), anchor="ctr"))
+                 prompt="표, 차트, 넓은 그림", lst=ppr(1, 20, "accent6", algn="ctr"), anchor="ctr"))
 
 
 def L_E(ids, img):
@@ -256,7 +256,7 @@ def L_E(ids, img):
                 prompt=f"{'왼쪽' if side == 'left' else '오른쪽'} 제목", fill="accent1",
                 lst=ppr(1, 28, "bg1", heavy=True, algn="ctr"), anchor="ctr", autofit="none")
         s += ph(ids, f"body_{side}", x, 3.30, 9.0, 6.95, type_="body", idx=i + 1,
-                prompt="항목", line=CARD_LINE, lst=bullet_levels(26, 24, 22, lnSpc=125, spcBef=8),
+                prompt="항목", line=CARD_LINE, lst=bullet_levels(26, 24, 22, lnSpc=150, spcBef=0),
                 anchor="t", ins=(0.4, 0.35, 0.35, 0.3))
     return s
 
@@ -276,7 +276,7 @@ def L_H(ids, img):
                  lst=ppr(1, 48, "accent1", heavy=True, algn="ctr", lnSpc=115))
             + ph(ids, "support", 2.5, 6.3, 15.0, 3.0, type_="body", idx=22,
                  prompt="보충 설명 1~2줄", anchor="t",
-                 lst=ppr(1, 28, "tx1:75", algn="ctr", lnSpc=130)))
+                 lst=ppr(1, 28, "tx1:75", algn="ctr", lnSpc=150)))
 
 
 def L_closing(ids, img):
@@ -289,7 +289,7 @@ def L_closing(ids, img):
     s += ph(ids, "title", 3.5, 3.7, 13.0, 2.3, type_="ctrTitle", prompt="감사합니다",
             lst=ppr(1, 88, "accent1", heavy=True, algn="ctr"), anchor="b", autofit="none")
     s += ph(ids, "subtitle", 3.5, 6.3, 13.0, 0.9, type_="subTitle", idx=1,
-            prompt="Papers You Should Read · 2026 Q3",
+            prompt="Papers You Should Read | 2026 Q3",
             lst=ppr(1, 26, "tx1:75", algn="ctr"), anchor="t")
     s += rect(ids, "footer_bar", *G["footer_bar"], "accent1")
     return s
@@ -299,11 +299,11 @@ def L_guide(ids, img):
     s = rect(ids, "accent_bar", 0.75, 0.9, 0.08, 0.8, "accent1")
     s += ph(ids, "title", 1.1, 0.85, 14.5, 0.9, type_="title", prompt="가이드 제목",
             lst=ppr(1, 36, "accent1", heavy=True), anchor="ctr", ins=(0.05, 0, 0.05, 0))
-    s += text(ids, "tag", 15.8, 1.0, 3.45, 0.6, "숨김 가이드 · 발표에 나오지 않음", sz=16,
+    s += text(ids, "tag", 15.8, 1.0, 3.45, 0.6, "숨김 가이드: 발표에 나오지 않음", sz=16,
               color="accent2", algn="r")
     s += hline(ids, "rule", 0.75, 1.95, 18.5, "accent1:25", 1.0)
     s += ph(ids, "body", 1.1, 2.3, 17.9, 8.2, type_="body", idx=1, prompt="내용",
-            lst=bullet_levels(24, 21, 19, lnSpc=120, spcBef=6), anchor="t")
+            lst=bullet_levels(24, 21, 19, lnSpc=150, spcBef=0), anchor="t")
     s += rect(ids, "footer_bar", *G["footer_bar"], "accent1")
     return s
 
@@ -315,9 +315,9 @@ LAYOUTS = [
     ("A_FigureFull_Band", True, L_A, "그림 1개 전면 + 하단 밴드"),
     ("B_FigureTwo_Band", True, L_B, "그림 2개 비교 + 하단 밴드"),
     ("C_FigureExplain_Band", True, L_C, "좌 그림 + 우 해설 + 하단 밴드"),
-    ("D_TopBand_Wide", True, L_D, "상단 밴드 + 하단 넓은 표·차트"),
-    ("E_TwoColumn", True, L_E, "2단 카드 정리 (비교·결론)"),
-    ("F_Diagram_Band", True, L_F, "도형·수식 자유 영역 + 하단 밴드"),
+    ("D_TopBand_Wide", True, L_D, "상단 밴드 + 하단 넓은 표, 차트"),
+    ("E_TwoColumn", True, L_E, "2단 카드 정리 (비교, 결론)"),
+    ("F_Diagram_Band", True, L_F, "도형, 수식 자유 영역 + 하단 밴드"),
     ("G_TitleOnly", True, L_G, "제목만 (자유 구성, 부록)"),
     ("H_Statement", True, L_H, "핵심 질문 또는 한 문장 요약"),
     ("Closing", False, L_closing, "마무리"),
@@ -333,7 +333,7 @@ def master_xml(ids, img, layout_rids):
     chrome += pic(ids, "logo_kiie", img("kiie_emblem.png"), 16.92, 0.42, 1.36, 1.10)
     chrome += pic(ids, "logo_dsba", img("dsba_square.png"), 18.40, 0.42, 1.26, 1.10)
     chrome += rect(ids, "footer_bar", *G["footer_bar"], "accent1")
-    chrome += text(ids, "footer_text", 0.1, 10.76, 6.3, 0.5, "Papers You Should Read  ·  DSBA Lab",
+    chrome += text(ids, "footer_text", 0.1, 10.76, 6.3, 0.5, "Papers You Should Read  |  DSBA Lab",
                    sz=20, color="bg1")
     chrome += text(ids, "slide_number", 17.7, 10.76, 2.1, 0.5, "", sz=22, color="bg1",
                    algn="r", field="slidenum")

@@ -124,7 +124,8 @@ def draw_shapes(slide, layout_name, shapes, base):
         elif t == "text":
             C.textbox(slide, x, y, w, h, s["text"], style=s.get("style", "body"),
                       size=s.get("size", 24), align=s.get("align", "l"), anchor=s.get("anchor", "t"),
-                      bullets=s.get("bullets", False))
+                      bullets=s.get("bullets", False),
+                      line_spacing=s.get("line_spacing", C.LINE_SPACING))
         elif t == "arrow":
             (x1, y1), (x2, y2) = s["from"], s["to"]
             if frame == "zone":
@@ -165,7 +166,7 @@ def draw_shapes(slide, layout_name, shapes, base):
 
 
 TITLE_MAX_WORDS = 4
-_SKIP = {"vs", "vs.", "·", "-", "–", "—", "&", "/", ":"}
+_SKIP = {"vs", "vs.", "-", "&", "/", ":", "|"}
 
 
 def lint_title(title):
@@ -181,12 +182,43 @@ def lint_title(title):
     return f"title '{title}': " + ", ".join(probs) if probs else None
 
 
+BANNED_PUNCT = {"·": "middle dot", "ㆍ": "middle dot", "•": "bullet dot", "—": "em dash",
+                "–": "en dash", "―": "horizontal bar"}
+
+
+def _strings(v):
+    if isinstance(v, str):
+        yield v
+    elif isinstance(v, dict):
+        for x in v.values():
+            yield from _strings(x)
+    elif isinstance(v, list):
+        for x in v:
+            yield from _strings(x)
+
+
+def lint_punct(sd):
+    """Lab rule: no middle dots or long dashes on slides (use commas, colons, '/')."""
+    found = set()
+    for k, v in sd.items():
+        if k in ("notes", "layout", "hidden", "line_spacing"):
+            continue
+        for s in _strings(v):
+            if k == "shapes" and (s.endswith(".png") or s.endswith(".jpg")):
+                continue
+            for ch, name in BANNED_PUNCT.items():
+                if ch in s:
+                    found.add(f"{name} '{ch}' in “{s[:30]}”")
+    return sorted(found)
+
+
 def add_slide(prs, sd, meta, base):
     layout = find_layout(prs, sd["layout"])
     slide = prs.slides.add_slide(layout)
     roles = layout_roles(layout)
     by_idx = {p.placeholder_format.idx: p for p in slide.placeholders}
 
+    WARNINGS.extend(lint_punct(sd))
     if sd["layout"] in CONTENT_LAYOUTS:
         w_ = lint_title(sd.get("title"))
         if w_:
@@ -221,7 +253,9 @@ def add_slide(prs, sd, meta, base):
                         C.set_color(r.font.color, "accent1")
                         r.font.bold = True
         else:
-            C.fill_text(ph.text_frame, val, levels=role in TEXT_ROLES_WITH_LEVELS)
+            # layouts already use 1.5; "line_spacing": {"band": 1.2} overrides per role
+            C.fill_text(ph.text_frame, val, levels=role in TEXT_ROLES_WITH_LEVELS,
+                        line_spacing=(sd.get("line_spacing") or {}).get(role))
 
     # drop placeholders that were not filled
     for idx, ph in by_idx.items():
